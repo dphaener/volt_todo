@@ -1,0 +1,32 @@
+<:Title>
+  Home
+
+<:Body>
+  <h1>Home</h1>
+  {{ if Volt.current_user }}
+    <p>Hi {{ Volt.current_user.name }}</p>
+  {{ end }}
+  
+  <form e-submit="create_todo" role="form">
+    <div class="row">
+      <div class="form-group">
+        <div class="col-md-6">
+          <input class="form-control" type="text" placeholder="Create a todo" value="{{ page._new_todo }}" />
+        </div>
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-primary pull-right">Submit</button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  {{ if todos }}
+    <ul>
+      {{ todos.each do |todo| }}
+      <li class="{{ todo_complete(todo) }}">
+          <input e-click="toggle_todo(todo)" type="checkbox" checked="{{ todo._completed }}" />
+          <span>{{ todo._title }}</span>
+          <button e-click="destroy">Remove</button>
+        </li>
+      {{ end }}
+  {{ end }}
